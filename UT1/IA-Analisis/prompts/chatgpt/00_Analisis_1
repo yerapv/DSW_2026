@@ -1,0 +1,154 @@
+## 1. Actores
+
+ ### Actor principal
+
+ - **Visitante/cliente de la tienda**: consulta el listado de productos, busca por nombre o SKU y filtra por categoría.
+
+ ### Actores secundarios
+
+ - **Sistema**: procesa la búsqueda, aplica filtros, ordena los resultados y muestra los mensajes correspondientes.
+
+ > **Requisito explícito:** no se contempla ningún actor de administración o gestión de productos.
+
+ ## 2\. Casos de uso
+
+ ### CU-01 — Consultar listado de productos
+
+ - El visitante accede a `/productos`.
+- El sistema muestra los productos disponibles en el listado.
+- El orden inicial es por nombre.
+
+ ### CU-02 — Buscar productos
+
+ - El visitante introduce un término mediante el parámetro `q`.
+- El sistema busca coincidencias por **nombre o SKU**.
+- El listado muestra los productos que cumplen la búsqueda.
+
+ ### CU-03 — Filtrar por categoría
+
+ - El visitante selecciona una categoría mediante el parámetro `categoria`.
+- El sistema muestra los productos pertenecientes a esa categoría.
+
+ ### CU-04 — Combinar búsqueda y filtro
+
+ - El visitante puede utilizar simultáneamente `q` y `categoria`.
+- El sistema aplica ambos criterios.
+
+ ### CU-05 — Consultar un listado sin resultados
+
+ - Si los criterios aplicados no producen coincidencias, el sistema muestra un mensaje indicando que no hay resultados.
+
+ ## 3\. Reglas de negocio
+
+ ### Explícitas
+
+ - Cada producto tiene **SKU, nombre, categoría, precio y stock**.
+- La descripción es opcional.
+- Un producto puede estar **activo o inactivo**.
+- La búsqueda se realiza por **nombre o SKU**.
+- El parámetro de búsqueda es `q`.
+- El filtro de categoría utiliza `categoria`.
+- El orden inicial es por nombre.
+- Debe existir un mensaje cuando no haya resultados.
+
+ ### Propuestas mías
+
+ Estas decisiones **no están determinadas por los requisitos**:
+
+ - Mostrar únicamente productos activos en el listado.
+- Considerar la búsqueda por nombre/SKU como coincidencia parcial y no exclusivamente exacta.
+- Hacer la búsqueda por nombre/SKU independiente de mayúsculas y minúsculas.
+- Ordenar los nombres alfabéticamente de forma ascendente.
+- Tratar `q` vacío como ausencia de búsqueda.
+- Tratar una categoría inexistente como un filtro sin coincidencias, en lugar de producir un error.
+
+ ## 4\. Ambigüedades
+
+ - **Productos inactivos:** no se especifica si deben aparecer en `/productos`.
+- **Stock:** no se indica si el stock debe mostrarse ni si un producto sin stock debe seguir apareciendo.
+- **Búsqueda:** no se define si la coincidencia es exacta, parcial, por palabras o mediante otro criterio.
+- **Mayúsculas/minúsculas:** no se especifica si `q` distingue entre ellas.
+- **SKU:** no se aclara si la búsqueda debe admitir coincidencias parciales.
+- **Categorías:** no se indica cómo se obtienen ni qué ocurre con una categoría inexistente.
+- **Orden:** se indica «por nombre», pero no si es ascendente ni qué ocurre con nombres iguales.
+- **Precio:** no se especifica moneda, formato ni precisión decimal.
+- **Descripción:** se indica que es opcional, pero no si debe mostrarse en el listado.
+- **Paginación:** no se indica si el listado debe paginarse.
+- **URL:** no se especifica si los parámetros `q` y `categoria` deben conservarse en la URL después de aplicar los filtros.
+
+ ## 5\. Decisiones pendientes
+
+ Recomendaría cerrar, como mínimo, estas decisiones antes de implementar:
+
+ | Decisión | Opciones a concretar |
+| --- | --- |
+| Productos inactivos | Mostrar / ocultar |
+| Productos sin stock | Mostrar / ocultar |
+| Tipo de búsqueda | Parcial / exacta / por palabras |
+| Sensibilidad | Ignorar / distinguir mayúsculas |
+| SKU | Coincidencia parcial / exacta |
+| Orden | Nombre ascendente / descendente |
+| Categorías | Catálogo definido / derivadas de productos |
+| Categoría inexistente | 0 resultados / error de validación |
+| Precio | Moneda y número de decimales |
+| Descripción | Mostrar / no mostrar en listado |
+| Paginación | Sí / no; tamaño de página |
+| Parámetros URL | Mantenerlos / comportamiento alternativo |
+
+## 6\. Criterios de aceptación verificables
+
+ ### Listado
+
+ - **CA-01:** Al acceder a `/productos`, se muestra el listado de productos.
+- **CA-02:** Los productos del listado aparecen inicialmente ordenados por nombre.
+- **CA-03:** Cada producto mostrado permite identificar al menos su SKU, nombre, categoría, precio y stock.
+- **CA-04:** La descripción puede estar ausente sin impedir que el producto aparezca.
+
+ ### Búsqueda
+
+ - **CA-05:** Al acceder a `/productos?q=ABC`, solo se muestran productos que cumplen el criterio de búsqueda sobre nombre o SKU.
+- **CA-06:** Una búsqueda que no tenga coincidencias muestra el mensaje de ausencia de resultados.
+- **CA-07:** Una búsqueda por SKU permite encontrar el producto correspondiente.
+
+ ### Categoría
+
+ - **CA-08:** Al acceder a `/productos?categoria=X`, solo se muestran productos de la categoría `X`.
+- **CA-09:** Una categoría sin productos muestra el mensaje de ausencia de resultados.
+
+ ### Combinación
+
+ - **CA-10:** Al proporcionar simultáneamente `q` y `categoria`, solo aparecen productos que cumplen **ambos** criterios.
+- **CA-11:** Si la combinación de búsqueda y categoría no produce coincidencias, se muestra el mensaje de ausencia de resultados.
+
+ ### Estado
+
+ - **CA-12:** El comportamiento de los productos activos e inactivos debe ajustarse a la decisión pendiente sobre visibilidad de productos inactivos.
+
+ Este último criterio queda deliberadamente pendiente porque el requisito original no determina qué debe ocurrir con `activo/inactivo`.
+
+ ## 7\. Requisitos explícitos vs. propuestas
+
+ | Tema | Explícito | Propuesta |
+| --- | --- | --- |
+| SKU | Sí | — |
+| Nombre | Sí | — |
+| Categoría | Sí | — |
+| Descripción opcional | Sí | — |
+| Precio | Sí | — |
+| Stock | Sí | — |
+| Activo/inactivo | Sí | — |
+| URL `/productos` | Sí | — |
+| Búsqueda `q` | Sí | — |
+| Campos de búsqueda: nombre/SKU | Sí | — |
+| Filtro `categoria` | Sí | — |
+| Orden inicial por nombre | Sí | — |
+| Mensaje sin resultados | Sí | — |
+| Mostrar solo activos | No | **Propuesta** |
+| Búsqueda parcial | No | **Propuesta** |
+| Búsqueda sin distinguir mayúsculas | No | **Propuesta** |
+| Orden ascendente | No | **Propuesta** |
+| Comportamiento ante categoría inexistente | No | **Propuesta** |
+| Paginación | No | **No definida** |
+| Moneda/formato del precio | No | **No definida** |
+
+**Conclusión funcional:** el alcance queda limitado al **catálogo/listado consultable de productos**. No se incorporan carrito, usuarios, pedidos ni funcionalidades de administración. Las principales decisiones que conviene cerrar antes de pasar al diseño técnico son la visibilidad de inactivos, la semántica exacta de la búsqueda y el comportamiento de categorías/stock.

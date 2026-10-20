@@ -1,4 +1,4 @@
-# Ejecutar la solución E18
+# Ejecutar los ejercicios en un proyecto unico
 
 Ejecutar los siguientes comandos, en orden, desde la raíz del proyecto Laravel que contiene el ejercicio:
 

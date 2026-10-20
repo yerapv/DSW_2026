@@ -19,4 +19,15 @@ class GuardarMascotaRequest extends FormRequest
             'responsable' => ['required', 'string', 'max:100'],
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'nombre.required' => 'Indica el nombre de la mascota.',
+            'especie.required' => 'Selecciona la especie de la mascota.',
+            'edad.required' => 'Indica la edad de la mascota.',
+            'responsable.required' => 'Indica el nombre de la persona responsable de la mascota.',
+        ];
+    }
+
 }

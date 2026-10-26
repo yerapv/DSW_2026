@@ -1,0 +1,51 @@
+// Escaparate 01_Listar_y_mostrar_fotos MVC
+digraph "01_Listar_y_mostrar_fotos" {
+	bgcolor=white compound=true newrank=true nodesep=0.5 outputorder=edgesfirst pad=0.55 rankdir=TB ranksep=0.55 splines=spline
+	node [fontcolor="#273449" fontname="DejaVu Sans" fontsize=11.1 margin="0.18,0.14" penwidth=1.25 shape=box style="rounded,filled"]
+	edge [arrowsize=0.73 color="#6B7E97" fontcolor="#53677F" fontname="DejaVu Sans" fontsize=10.8 penwidth=1.5]
+	subgraph cluster_cliente {
+		color="#518BC4" fillcolor="#E8F3FF" fontcolor="#295F95" fontname="DejaVu Sans" fontsize=16 label="NAVEGADOR / USUARIO" margin=16 penwidth=2 style="rounded,filled"
+		A [label="Navegador: GET /admin/imagenes" color="#518BC4" fillcolor="#FFFFFF" tooltip="Navegador: GET /admin/imagenes"]
+		J [label="Navegador recibe el HTML y\nsolicita cada imagen" color="#518BC4" fillcolor="#FFFFFF" tooltip="Navegador recibe el HTML y solicita cada imagen"]
+		N [label="Navegador muestra la fotografía\nen la tabla" color="#518BC4" fillcolor="#FFFFFF" tooltip="Navegador muestra la fotografía en la tabla"]
+	}
+	subgraph cluster_framework {
+		color="#8797B1" fillcolor="#F1F4F8" fontcolor="#63748C" fontname="DejaVu Sans" fontsize=16 label="LARAVEL · RUTAS Y MIDDLEWARE" margin=16 penwidth=2 style="rounded,filled"
+		B [label="Laravel: entrada, rutas y\nmiddleware web" color="#8797B1" fillcolor="#FFFFFF" tooltip="Laravel: entrada, rutas y middleware web"]
+	}
+	subgraph cluster_controlador {
+		color="#54A17A" fillcolor="#E8F6EE" fontcolor="#28754E" fontname="DejaVu Sans" fontsize=16 label="C · CONTROLADOR" margin=16 penwidth=2 style="rounded,filled"
+		C [label="ImagenController.index" color="#54A17A" fillcolor="#FFFFFF" tooltip="ImagenController.index"]
+	}
+	subgraph cluster_modelo {
+		color="#D4A053" fillcolor="#FFF0D9" fontcolor="#98601B" fontname="DejaVu Sans" fontsize=16 label="M · MODELO" margin=16 penwidth=2 style="rounded,filled"
+		D [label="Eloquent: Imagen.latest.get" color="#D4A053" fillcolor="#FFFFFF" tooltip="Eloquent: Imagen.latest.get"]
+		F [label="Colección con nombre, autor y\nruta de cada foto" color="#D4A053" fillcolor="#FFFFFF" tooltip="Colección con nombre, autor y ruta de cada foto"]
+	}
+	subgraph cluster_vista {
+		color="#A579D0" fillcolor="#F4EAFF" fontcolor="#7648A4" fontname="DejaVu Sans" fontsize=16 label="V · VISTA" margin=16 penwidth=2 style="rounded,filled"
+		G [label="Blade:\nadmin/imagenes/index.blade.php" color="#A579D0" fillcolor="#FFFFFF" tooltip="Blade: admin/imagenes/index.blade.php"]
+		I [label="Layouts admin y app: HTML con\ntabla y etiquetas img" color="#A579D0" fillcolor="#FFFFFF" tooltip="Layouts admin y app: HTML con tabla y etiquetas img"]
+	}
+	subgraph cluster_infra {
+		color="#8E99AA" fillcolor="#F1F2F4" fontcolor="#677385" fontname="DejaVu Sans" fontsize=16 label="DATOS Y ARCHIVOS · SERVICIOS" margin=16 penwidth=2 style="rounded,filled"
+		E [label="MySQL: tabla imagenes" color="#8E99AA" fillcolor="#FFFFFF" shape=cylinder style=filled tooltip="MySQL: tabla imagenes"]
+		H [label="Storage genera la URL\n/storage/escaparate/archivo" color="#8E99AA" fillcolor="#FFFFFF" tooltip="Storage genera la URL /storage/escaparate/archivo"]
+		K [label="El servidor atiende la URL\n/storage/escaparate/archivo" color="#8E99AA" fillcolor="#FFFFFF" tooltip="El servidor atiende la URL /storage/escaparate/archivo"]
+		L [label="Enlace public/storage hacia\nstorage/app/public" color="#8E99AA" fillcolor="#FFFFFF" tooltip="Enlace public/storage hacia storage/app/public"]
+		M [label="Archivo en\nstorage/app/public/escaparate" color="#8E99AA" fillcolor="#FFFFFF" shape=cylinder style=filled tooltip="Archivo en storage/app/public/escaparate"]
+	}
+	A -> B
+	B -> C
+	C -> D
+	D -> E
+	E -> F
+	F -> G
+	G -> H
+	H -> I
+	I -> J
+	J -> K
+	K -> L
+	L -> M
+	M -> N
+}

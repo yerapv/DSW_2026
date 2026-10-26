@@ -1,0 +1,155 @@
+/* Presentación del layout Blade: variables comunes de color y tipografía. */
+:root { --ink: #162620; --muted: #68756e; --green: #245c43; --lime: #d9edaa; --paper: #f6f7f2; --line: #dce2d7; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.6 system-ui, sans-serif; }
+a { color: var(--green); text-decoration: none; }
+a:hover { text-decoration: underline; }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px solid #779a3b; outline-offset: 4px; }
+h1, h2, h3, p { margin-top: 0; }
+h1 { font-size: clamp(1.9rem, 4vw, 2.9rem); letter-spacing: -.045em; line-height: 1.12; margin-bottom: 24px; }
+h2 { line-height: 1.3; font-size: 1.35rem; letter-spacing: -.025em; }
+h3 { font-size: 1.2rem; }
+/* La cabecera se comparte en todas las páginas mediante @extends. */
+.topbar { background: var(--green); color: white; padding: 7px 24px; text-align: center; font-size: .78rem; letter-spacing: .06em; }
+.header { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding: 23px 5vw; background: white; border-bottom: 1px solid var(--line); }
+.brand { font-size: 1.55rem; font-weight: 800; display: flex; align-items: center; color: var(--ink); letter-spacing: -.05em; }
+.brand-mark { display: inline-grid; place-items: center; background: var(--green); color: var(--lime); width: 38px; height: 38px; border-radius: 11px; margin-right: 10px; }
+.header nav { display: flex; align-items: center; gap: 26px; font-size: .9rem; }
+/* El contenido ocupa el ancho disponible, sin una columna de menú lateral. */
+.shell { max-width: 1400px; margin: auto; padding: 36px 5vw 70px; }
+.eyebrow { font-size: .66rem; letter-spacing: .16em; font-weight: 750; color: var(--muted); margin-bottom: 18px; }
+main { min-width: 0; }
+.hero { padding: 40px; background: var(--green); border-radius: 18px; color: white; min-height: 355px; position: relative; overflow: hidden; }
+.hero h1 { font-size: clamp(2.2rem, 4vw, 3.7rem); max-width: 650px; }
+.hero .eyebrow { color: var(--lime); }
+.hero > p:not(.eyebrow) { color: #e1ebdf; max-width: 500px; }
+.hero .button { background: var(--lime); color: var(--ink); }
+.hero-sign { margin-top: 35px; border-top: 1px solid #548068; padding-top: 15px; font-weight: 700; letter-spacing: .02em; }
+.hero-sign span { float: right; font-size: .56rem; letter-spacing: .15em; font-weight: 400; padding-top: 6px; }
+/* Tarjetas y rejillas se reutilizan sin componentes o librerías adicionales. */
+.grid { display: grid; gap: 18px; }
+.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.card { background: white; border: 1px solid var(--line); border-radius: 14px; padding: 26px; overflow-wrap: anywhere; }
+.card p:last-child { margin-bottom: 0; }
+.linked { color: var(--ink); display: block; }
+.linked:hover { border-color: var(--green); text-decoration: none; }
+.linked p { color: var(--muted); font-size: .88rem; }
+.linked > span:last-child { font-size: .83rem; color: var(--green); }
+.section-heading { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin: 28px 0 22px; }
+.section-heading h1, .section-heading h2 { margin-bottom: 0; }
+.section-heading > span { color: var(--muted); font-size: .8rem; }
+.banner { display: flex; justify-content: space-between; align-items: center; gap: 20px; margin-top: 26px; padding: 27px; border-radius: 14px; background: #e9eddf; }
+.banner h2 { margin-bottom: 5px; }
+.banner p { margin: 0; color: var(--muted); font-size: .88rem; }
+.lead { color: var(--muted); max-width: 700px; margin-bottom: 25px; }
+.price { font-size: 1.8rem; font-weight: 700; letter-spacing: -.04em; margin: 20px 0; }
+.badge { display: inline-block; font-size: .72rem; padding: 4px 9px; background: #edf3e4; color: var(--green); border-radius: 5px; }
+.muted { color: var(--muted); }
+.detail { max-width: 700px; }
+.product-card h2 { margin: 14px 0 6px; }
+.product-card h2 a { color: var(--ink); }
+/* Los botones se aplican tanto a enlaces de navegación como a envíos de formulario. */
+button, .button { display: inline-block; background: var(--green); color: white; border: 1px solid var(--green); border-radius: 7px; font: inherit; font-size: .85rem; font-weight: 650; padding: 11px 17px; cursor: pointer; text-align: center; }
+button:hover, .button:hover { filter: brightness(1.1); text-decoration: none; }
+.small { font-size: .8rem; padding: 9px 14px; }
+.secondary { background: white; color: var(--green); }
+.text-button { background: transparent; padding: 0; border: none; color: var(--green); font-weight: 500; }
+.danger { color: #a13e35; }
+.actions { display: flex; align-items: center; flex-wrap: wrap; gap: 18px; margin-top: 24px; font-size: .85rem; }
+.actions form { margin: 0; }
+/* Los campos tienen label visible. La validación del servidor sigue siendo necesaria. */
+.form { display: grid; gap: 18px; max-width: 650px; }
+.form button { justify-self: start; }
+label { display: grid; gap: 6px; font-size: .87rem; font-weight: 600; }
+input, select, textarea { min-width: 0; width: 100%; font: inherit; font-weight: 400; color: var(--ink); background: white; border: 1px solid #bdc9bd; border-radius: 6px; padding: 10px 12px; }
+textarea { resize: vertical; }
+input[type=checkbox] { width: auto; }
+.check { display: flex; align-items: center; gap: 10px; }
+small { font-weight: 400; color: var(--muted); }
+.filters { display: flex; flex-wrap: wrap; gap: 15px; align-items: end; margin-bottom: 25px; }
+.filters label { flex: 1 1 170px; }
+.filters a { padding-bottom: 10px; font-size: .85rem; }
+/* Flash y errores reflejan los datos que Laravel añade a la sesión. */
+.message { border: 1px solid; padding: 16px 20px; border-radius: 8px; margin-bottom: 20px; }
+.message ul { margin-bottom: 0; }
+.success { background: #edf5e8; border-color: #bdd2b5; }
+.error { background: #fff1ed; border-color: #e4c2b9; color: #873b31; }
+.warning { background: #fff9df; border-color: #e5d392; }
+.field-error { color: #a13e35; font-size: .8rem; margin: -10px 0 0; }
+/* Tablas, galerías y paginación comparten el estilo del resto de la tienda. */
+dl { display: grid; grid-template-columns: minmax(100px, 160px) minmax(0, 1fr); gap: 8px 20px; }
+dt { color: var(--muted); font-size: .9rem; }
+dd { margin: 0; }
+.item-list { padding-left: 18px; }
+.item-list li { margin: 10px 0; }
+.spaced { margin-top: 18px; }
+.pre-line { white-space: pre-line; }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; text-align: left; }
+th, td { padding: 13px 8px; border-bottom: 1px solid var(--line); }
+th { font-size: .78rem; color: var(--muted); }
+.gallery-image { width: 100%; height: 190px; object-fit: contain; border-radius: 7px; margin-bottom: 16px; background: var(--paper); }
+.pagination { margin-top: 25px; }
+.pagination nav { display: flex; justify-content: space-between; gap: 20px; }
+.pagination ul { display: flex; justify-content: space-between; gap: 24px; padding: 0; list-style: none; width: 100%; }
+.pagination .disabled { color: var(--muted); }
+footer { border-top: 1px solid var(--line); padding: 22px 5vw; color: var(--muted); font-size: .78rem; text-align: center; }
+/* En pantallas pequeñas se apilan las columnas para conservar la legibilidad. */
+@media (max-width: 1050px) { .shell { padding-left: 3vw; padding-right: 3vw; } .three { grid-template-columns: 1fr; } .hero-sign span { float: none; display: block; } }
+@media (max-width: 720px) { .header { flex-direction: column; gap: 15px; } .header nav { flex-wrap: wrap; justify-content: center; gap: 15px; } .shell { display: block; padding: 22px 18px; } .two { grid-template-columns: 1fr; } .hero { padding: 27px; } .section-heading, .banner { align-items: flex-start; flex-direction: column; } .card { padding: 22px; } }
+
+/* Separación visual de áreas: la cabecera es común y cada layout aporta su menú. */
+.header { flex-wrap: wrap; gap: 20px; }
+.header .header-actions { margin-left: auto; gap: 12px; }
+.header-actions [aria-current="page"] { box-shadow: 0 3px 0 var(--green); }
+.header-actions a:not(.button) { padding: 8px 3px; }
+.admin-area { --green: #31445a; --lime: #dce8fa; }
+.purchase-form { display: flex; align-items: end; flex-wrap: wrap; gap: 12px; margin: 20px 0; }
+.purchase-form label { width: 90px; }
+/* En móvil, los accesos mantienen el orden Usuario, Admin y Carrito. */
+@media (max-width: 720px) {
+    .header .header-actions { margin-left: 0; justify-content: center; }
+}
+
+/* E17: una misma fotografía se adapta a tarjeta, ficha y previsualización de edición. */
+.product-photo { display: block; width: 100%; height: 200px; object-fit: contain; border-radius: 8px; background: #eff2e9; margin-bottom: 24px; }
+.product-photo-detail { height: 320px; }
+.product-photo-preview { max-width: 280px; height: 180px; margin-bottom: 0; }
+.product-photo-placeholder { display: grid; place-items: center; color: var(--muted); font-size: .9rem; }
+
+/* La navegación de la tienda y la administración se muestran como barras horizontales. */
+.site-navigation { background: white; border-bottom: 1px solid var(--line); }
+.navigation-inner { max-width: 1400px; margin: auto; padding: 16px 5vw; }
+.navigation-inner .eyebrow { margin-bottom: 9px; }
+.navigation-inner nav, .user-space-menu nav { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 24px; }
+.navigation-inner nav a, .user-space-menu nav a { font-size: .85rem; padding: 4px 0; }
+/* TU ESPACIO pertenece al contenido de /usuario, no al layout de toda la tienda. */
+.user-space-menu { background: #e9eddf; border: 1px solid var(--line); border-radius: 12px; padding: 22px; margin-bottom: 30px; }
+.user-space-menu .eyebrow { margin-bottom: 10px; }
+@media (max-width: 720px) {
+    .navigation-inner { padding: 16px 18px; }
+    .navigation-inner nav, .user-space-menu nav { gap: 8px 16px; }
+}
+
+/* La razón social se adapta a la cabecera sin perder los tres accesos de la derecha. */
+.brand > .brand-name { max-width: 360px; font-size: .95rem; line-height: 1.3; letter-spacing: .025em; font-weight: 750; }
+.brand-mark { flex-shrink: 0; }
+.user-page-actions { margin-bottom: 22px; }
+.order-status { display: inline-block; color: var(--green); background: #edf5e8; padding: 5px 10px; border-radius: 6px; font-size: .8rem; }
+
+/* Administración: tablas de registros y acciones por fila. */
+.admin-area .admin-page-actions { margin-bottom: 22px; }
+.admin-area .management-table { background: white; }
+.admin-area .management-table th, .admin-area .management-table td { padding: 14px 12px; vertical-align: middle; }
+.admin-area .management-table thead { background: #e8edf3; }
+.admin-area .management-table tbody th { color: var(--ink); font-size: .9rem; font-weight: 650; }
+.admin-area .management-table tbody tr:hover { background: #f0f3f7; }
+.admin-area .management-table .amount { white-space: nowrap; }
+.admin-area .row-actions { display: flex; flex-wrap: wrap; gap: 8px; min-width: 190px; }
+.admin-area .row-actions form { margin: 0; }
+.admin-area button.danger { background: #a13e35; border-color: #a13e35; color: white; }
+.admin-area .admin-thumbnail { display: block; width: 88px; height: 66px; object-fit: contain; margin: 0; border-radius: 4px; background: var(--paper); }
+.admin-area .product-photo-placeholder.admin-thumbnail { display: grid; text-align: center; font-size: .7rem; }
+.admin-area .admin-preview { display: block; max-width: 280px; width: 100%; height: 180px; object-fit: contain; }
+.admin-area .admin-form { max-width: 720px; padding: 24px 0; }

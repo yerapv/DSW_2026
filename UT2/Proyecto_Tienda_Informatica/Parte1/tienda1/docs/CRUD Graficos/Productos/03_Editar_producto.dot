@@ -1,0 +1,70 @@
+// Productos 03_Editar_producto MVC
+digraph "03_Editar_producto" {
+	bgcolor=white compound=true newrank=true nodesep=0.5 outputorder=edgesfirst pad=0.55 rankdir=TB ranksep=0.55 splines=spline
+	node [fontcolor="#273449" fontname="DejaVu Sans" fontsize=11.1 margin="0.18,0.14" penwidth=1.25 shape=box style="rounded,filled"]
+	edge [arrowsize=0.73 color="#6B7E97" fontcolor="#53677F" fontname="DejaVu Sans" fontsize=10.8 penwidth=1.5]
+	subgraph cluster_cliente {
+		color="#518BC4" fillcolor="#E8F3FF" fontcolor="#295F95" fontname="DejaVu Sans" fontsize=16 label="NAVEGADOR / USUARIO" margin=16 penwidth=2 style="rounded,filled"
+		A [label="GET /admin/productos/id/edit" color="#518BC4" fillcolor="#FFFFFF" tooltip="GET /admin/productos/id/edit"]
+		G [label="Formulario POST con _method=PUT y\ntoken CSRF" color="#518BC4" fillcolor="#FFFFFF" tooltip="Formulario POST con _method=PUT y token CSRF"]
+		V [label="GET /admin/productos: mostrar\ncambios" color="#518BC4" fillcolor="#FFFFFF" tooltip="GET /admin/productos: mostrar cambios"]
+	}
+	subgraph cluster_framework {
+		color="#8797B1" fillcolor="#F1F4F8" fontcolor="#63748C" fontname="DejaVu Sans" fontsize=16 label="LARAVEL · RUTAS Y MIDDLEWARE" margin=16 penwidth=2 style="rounded,filled"
+		B [label="Laravel: ruta, middleware y Route\nModel Binding" color="#8797B1" fillcolor="#FFFFFF" tooltip="Laravel: ruta, middleware y Route Model Binding"]
+		C [label="¿Existe el producto?" color="#8797B1" fillcolor="#FFFFFF" margin="0.2,0.1" shape=diamond style=filled tooltip="¿Existe el producto?"]
+		D [label="Respuesta 404" color="#8797B1" fillcolor="#FFFFFF" tooltip="Respuesta 404"]
+		H [label="Laravel interpreta PUT y verifica\nCSRF" color="#8797B1" fillcolor="#FFFFFF" tooltip="Laravel interpreta PUT y verifica CSRF"]
+		K [label="Volver al formulario con errores\ny old" color="#8797B1" fillcolor="#FFFFFF" tooltip="Volver al formulario con errores y old"]
+	}
+	subgraph cluster_controlador {
+		color="#54A17A" fillcolor="#E8F6EE" fontcolor="#28754E" fontname="DejaVu Sans" fontsize=16 label="C · CONTROLADOR" margin=16 penwidth=2 style="rounded,filled"
+		E [label="ProductoController.edit: producto\ny categorías" color="#54A17A" fillcolor="#FFFFFF" tooltip="ProductoController.edit: producto y categorías"]
+		I [label="GuardarProductoRequest: validar\nlos cambios" color="#54A17A" fillcolor="#FFFFFF" tooltip="GuardarProductoRequest: validar los cambios"]
+		J [label="¿Datos válidos?" color="#54A17A" fillcolor="#FFFFFF" margin="0.2,0.1" shape=diamond style=filled tooltip="¿Datos válidos?"]
+		L [label="ProductoController.update:\nconvertir precio y preparar JSON" color="#54A17A" fillcolor="#FFFFFF" tooltip="ProductoController.update: convertir precio y preparar JSON"]
+		M [label="¿Se adjuntó otra foto?" color="#54A17A" fillcolor="#FFFFFF" margin="0.2,0.1" shape=diamond style=filled tooltip="¿Se adjuntó otra foto?"]
+		O [label="Conservar la ruta y el archivo\nactuales" color="#54A17A" fillcolor="#FFFFFF" tooltip="Conservar la ruta y el archivo actuales"]
+		Q [label="¿Se actualizó correctamente?" color="#54A17A" fillcolor="#FFFFFF" margin="0.2,0.1" shape=diamond style=filled tooltip="¿Se actualizó correctamente?"]
+		R [label="Conservar foto anterior, retirar\nnueva si la hay y propagar\nexcepción" color="#54A17A" fillcolor="#FFFFFF" tooltip="Conservar foto anterior, retirar nueva si la hay y propagar excepción"]
+		S [label="¿Hay una foto nueva?" color="#54A17A" fillcolor="#FFFFFF" margin="0.2,0.1" shape=diamond style=filled tooltip="¿Hay una foto nueva?"]
+		U [label="Redirigir al listado" color="#54A17A" fillcolor="#FFFFFF" tooltip="Redirigir al listado"]
+	}
+	subgraph cluster_modelo {
+		color="#D4A053" fillcolor="#FFF0D9" fontcolor="#98601B" fontname="DejaVu Sans" fontsize=16 label="M · MODELO" margin=16 penwidth=2 style="rounded,filled"
+		P [label="Producto.update: actualizar MySQL" color="#D4A053" fillcolor="#FFFFFF" tooltip="Producto.update: actualizar MySQL"]
+	}
+	subgraph cluster_vista {
+		color="#A579D0" fillcolor="#F4EAFF" fontcolor="#7648A4" fontname="DejaVu Sans" fontsize=16 label="V · VISTA" margin=16 penwidth=2 style="rounded,filled"
+		F [label="Blade: edit y _form con valores\nactuales y foto" color="#A579D0" fillcolor="#FFFFFF" tooltip="Blade: edit y _form con valores actuales y foto"]
+	}
+	subgraph cluster_infra {
+		color="#8E99AA" fillcolor="#F1F2F4" fontcolor="#677385" fontname="DejaVu Sans" fontsize=16 label="DATOS Y ARCHIVOS · SERVICIOS" margin=16 penwidth=2 style="rounded,filled"
+		N [label="Guardar foto nueva y preparar su\nruta" color="#8E99AA" fillcolor="#FFFFFF" tooltip="Guardar foto nueva y preparar su ruta"]
+		T [label="Storage: eliminar la fotografía\nanterior" color="#8E99AA" fillcolor="#FFFFFF" tooltip="Storage: eliminar la fotografía anterior"]
+	}
+	A -> B
+	B -> C
+	C -> D [label=No color="#BD6576" fontcolor="#A45163"]
+	C -> E [label="Sí" color="#3C9B76" fontcolor="#2A775C"]
+	E -> F
+	F -> G
+	G -> H
+	H -> I
+	I -> J
+	J -> K [label=No color="#BD6576" fontcolor="#A45163"]
+	K -> F
+	J -> L [label="Sí" color="#3C9B76" fontcolor="#2A775C"]
+	L -> M
+	M -> N [label="Sí" color="#3C9B76" fontcolor="#2A775C"]
+	M -> O [label=No color="#BD6576" fontcolor="#A45163"]
+	N -> P
+	O -> P
+	P -> Q
+	Q -> R [label=No color="#BD6576" fontcolor="#A45163"]
+	Q -> S [label="Sí" color="#3C9B76" fontcolor="#2A775C"]
+	S -> T [label="Sí" color="#3C9B76" fontcolor="#2A775C"]
+	S -> U [label=No color="#BD6576" fontcolor="#A45163"]
+	T -> U
+	U -> V
+}

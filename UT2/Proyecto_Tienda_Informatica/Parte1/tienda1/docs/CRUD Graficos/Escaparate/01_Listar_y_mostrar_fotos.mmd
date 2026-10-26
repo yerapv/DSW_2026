@@ -1,0 +1,61 @@
+flowchart TD
+    %% Procesos originales organizados por capas.
+    %% Navegador, Laravel y servicios externos no son capas MVC.
+    subgraph L_CLIENTE["NAVEGADOR / USUARIO"]
+        direction TB
+        A["Navegador: GET /admin/imagenes"]
+        J["Navegador recibe el HTML y solicita cada imagen"]
+        N["Navegador muestra la fotografía en la tabla"]
+    end
+    subgraph L_FRAMEWORK["LARAVEL · RUTAS Y MIDDLEWARE"]
+        direction TB
+        B["Laravel: entrada, rutas y middleware web"]
+    end
+    subgraph L_CONTROLADOR["C · CONTROLADOR"]
+        direction TB
+        C["ImagenController.index"]
+    end
+    subgraph L_MODELO["M · MODELO"]
+        direction TB
+        D["Eloquent: Imagen.latest.get"]
+        F["Colección con nombre, autor y ruta de cada foto"]
+    end
+    subgraph L_VISTA["V · VISTA"]
+        direction TB
+        G["Blade: admin/imagenes/index.blade.php"]
+        I["Layouts admin y app: HTML con tabla y etiquetas img"]
+    end
+    subgraph L_INFRA["DATOS Y ARCHIVOS · SERVICIOS"]
+        direction TB
+        E[("MySQL: tabla imagenes")]
+        H["Storage genera la URL /storage/escaparate/archivo"]
+        K["El servidor atiende la URL /storage/escaparate/archivo"]
+        L["Enlace public/storage hacia storage/app/public"]
+        M[("Archivo en storage/app/public/escaparate")]
+    end
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+    F --> G
+    G --> H
+    H --> I
+    I --> J
+    J --> K
+    K --> L
+    L --> M
+    M --> N
+    %% Colores por capa arquitectónica
+    classDef clase_CLIENTE fill:#E8F3FF,stroke:#518BC4,color:#213247,stroke-width:1.5px;
+    class A,J,N clase_CLIENTE;
+    classDef clase_FRAMEWORK fill:#F1F4F8,stroke:#8797B1,color:#213247,stroke-width:1.5px;
+    class B clase_FRAMEWORK;
+    classDef clase_CONTROLADOR fill:#E8F6EE,stroke:#54A17A,color:#213247,stroke-width:1.5px;
+    class C clase_CONTROLADOR;
+    classDef clase_MODELO fill:#FFF0D9,stroke:#D4A053,color:#213247,stroke-width:1.5px;
+    class D,F clase_MODELO;
+    classDef clase_VISTA fill:#F4EAFF,stroke:#A579D0,color:#213247,stroke-width:1.5px;
+    class G,I clase_VISTA;
+    classDef clase_INFRA fill:#F1F2F4,stroke:#8E99AA,color:#213247,stroke-width:1.5px;
+    class E,H,K,L,M clase_INFRA;

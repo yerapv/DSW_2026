@@ -1,0 +1,80 @@
+flowchart TD
+    %% Procesos originales organizados por capas.
+    %% Navegador, Laravel y servicios externos no son capas MVC.
+    subgraph L_CLIENTE["NAVEGADOR / USUARIO"]
+        direction TB
+        A["GET /admin/productos/id/edit"]
+        G["Formulario POST con _method=PUT y token CSRF"]
+        V["GET /admin/productos: mostrar cambios"]
+    end
+    subgraph L_FRAMEWORK["LARAVEL · RUTAS Y MIDDLEWARE"]
+        direction TB
+        B["Laravel: ruta, middleware y Route Model Binding"]
+        C{"¿Existe el producto?"}
+        D["Respuesta 404"]
+        H["Laravel interpreta PUT y verifica CSRF"]
+        K["Volver al formulario con errores y old"]
+    end
+    subgraph L_CONTROLADOR["C · CONTROLADOR"]
+        direction TB
+        E["ProductoController.edit: producto y categorías"]
+        I["GuardarProductoRequest: validar los cambios"]
+        J{"¿Datos válidos?"}
+        L["ProductoController.update: convertir precio y preparar JSON"]
+        M{"¿Se adjuntó otra foto?"}
+        O["Conservar la ruta y el archivo actuales"]
+        Q{"¿Se actualizó correctamente?"}
+        R["Conservar foto anterior, retirar nueva si la hay y propagar excepción"]
+        S{"¿Hay una foto nueva?"}
+        U["Redirigir al listado"]
+    end
+    subgraph L_MODELO["M · MODELO"]
+        direction TB
+        P["Producto.update: actualizar MySQL"]
+    end
+    subgraph L_VISTA["V · VISTA"]
+        direction TB
+        F["Blade: edit y _form con valores actuales y foto"]
+    end
+    subgraph L_INFRA["DATOS Y ARCHIVOS · SERVICIOS"]
+        direction TB
+        N["Guardar foto nueva y preparar su ruta"]
+        T["Storage: eliminar la fotografía anterior"]
+    end
+    A --> B
+    B --> C
+    C -->|No| D
+    C -->|Sí| E
+    E --> F
+    F --> G
+    G --> H
+    H --> I
+    I --> J
+    J -->|No| K
+    K --> F
+    J -->|Sí| L
+    L --> M
+    M -->|Sí| N
+    M -->|No| O
+    N --> P
+    O --> P
+    P --> Q
+    Q -->|No| R
+    Q -->|Sí| S
+    S -->|Sí| T
+    S -->|No| U
+    T --> U
+    U --> V
+    %% Colores por capa arquitectónica
+    classDef clase_CLIENTE fill:#E8F3FF,stroke:#518BC4,color:#213247,stroke-width:1.5px;
+    class A,G,V clase_CLIENTE;
+    classDef clase_FRAMEWORK fill:#F1F4F8,stroke:#8797B1,color:#213247,stroke-width:1.5px;
+    class B,C,D,H,K clase_FRAMEWORK;
+    classDef clase_CONTROLADOR fill:#E8F6EE,stroke:#54A17A,color:#213247,stroke-width:1.5px;
+    class E,I,J,L,M,O,Q,R,S,U clase_CONTROLADOR;
+    classDef clase_MODELO fill:#FFF0D9,stroke:#D4A053,color:#213247,stroke-width:1.5px;
+    class P clase_MODELO;
+    classDef clase_VISTA fill:#F4EAFF,stroke:#A579D0,color:#213247,stroke-width:1.5px;
+    class F clase_VISTA;
+    classDef clase_INFRA fill:#F1F2F4,stroke:#8E99AA,color:#213247,stroke-width:1.5px;
+    class N,T clase_INFRA;

@@ -1,0 +1,67 @@
+flowchart TD
+    %% Procesos originales organizados por capas.
+    %% Navegador, Laravel y servicios externos no son capas MVC.
+    subgraph L_CLIENTE["NAVEGADOR / USUARIO"]
+        direction TB
+        A["Navegador: abrir gestión de productos"]
+        B["GET /admin/productos"]
+        J["Navegador: mostrar el listado"]
+        K["Pulsar Ver: GET /admin/productos/id"]
+        Q["Navegador: mostrar ficha y botón Volver al listado"]
+    end
+    subgraph L_FRAMEWORK["LARAVEL · RUTAS Y MIDDLEWARE"]
+        direction TB
+        C["Laravel: entrada, rutas y middleware web"]
+        L["Route Model Binding: buscar Producto por id en MySQL"]
+        M{"¿Existe el producto?"}
+        N["Laravel responde con 404"]
+    end
+    subgraph L_CONTROLADOR["C · CONTROLADOR"]
+        direction TB
+        D["ProductoController.index"]
+        O["ProductoController.show: cargar categoría"]
+    end
+    subgraph L_MODELO["M · MODELO"]
+        direction TB
+        E["Eloquent: buscar por nombre, filtrar por tipo y ordenar"]
+        G["Cargar la categoría de cada producto y paginar de cinco en cinco"]
+    end
+    subgraph L_VISTA["V · VISTA"]
+        direction TB
+        H["Blade: admin/productos/index.blade.php"]
+        I["Layouts admin y app: HTML con tabla, acciones y Volver"]
+        P["Blade: admin/productos/show.blade.php"]
+    end
+    subgraph L_INFRA["DATOS Y ARCHIVOS · SERVICIOS"]
+        direction TB
+        F[("MySQL: productos y categorías")]
+    end
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+    F --> G
+    G --> H
+    H --> I
+    I --> J
+    J --> K
+    K --> L
+    L --> M
+    M -->|No| N
+    M -->|Sí| O
+    O --> P
+    P --> Q
+    %% Colores por capa arquitectónica
+    classDef clase_CLIENTE fill:#E8F3FF,stroke:#518BC4,color:#213247,stroke-width:1.5px;
+    class A,B,J,K,Q clase_CLIENTE;
+    classDef clase_FRAMEWORK fill:#F1F4F8,stroke:#8797B1,color:#213247,stroke-width:1.5px;
+    class C,L,M,N clase_FRAMEWORK;
+    classDef clase_CONTROLADOR fill:#E8F6EE,stroke:#54A17A,color:#213247,stroke-width:1.5px;
+    class D,O clase_CONTROLADOR;
+    classDef clase_MODELO fill:#FFF0D9,stroke:#D4A053,color:#213247,stroke-width:1.5px;
+    class E,G clase_MODELO;
+    classDef clase_VISTA fill:#F4EAFF,stroke:#A579D0,color:#213247,stroke-width:1.5px;
+    class H,I,P clase_VISTA;
+    classDef clase_INFRA fill:#F1F2F4,stroke:#8E99AA,color:#213247,stroke-width:1.5px;
+    class F clase_INFRA;

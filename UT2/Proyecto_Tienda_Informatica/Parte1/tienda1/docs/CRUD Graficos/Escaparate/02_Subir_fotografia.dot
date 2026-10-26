@@ -1,0 +1,62 @@
+// Escaparate 02_Subir_fotografia MVC
+digraph "02_Subir_fotografia" {
+	bgcolor=white compound=true newrank=true nodesep=0.5 outputorder=edgesfirst pad=0.55 rankdir=TB ranksep=0.55 splines=spline
+	node [fontcolor="#273449" fontname="DejaVu Sans" fontsize=11.1 margin="0.18,0.14" penwidth=1.25 shape=box style="rounded,filled"]
+	edge [arrowsize=0.73 color="#6B7E97" fontcolor="#53677F" fontname="DejaVu Sans" fontsize=10.8 penwidth=1.5]
+	subgraph cluster_cliente {
+		color="#518BC4" fillcolor="#E8F3FF" fontcolor="#295F95" fontname="DejaVu Sans" fontsize=16 label="NAVEGADOR / USUARIO" margin=16 penwidth=2 style="rounded,filled"
+		A [label="GET /admin/imagenes/nueva" color="#518BC4" fillcolor="#FFFFFF" tooltip="GET /admin/imagenes/nueva"]
+		E [label="Navegador: nombre, autor y\narchivo" color="#518BC4" fillcolor="#FFFFFF" tooltip="Navegador: nombre, autor y archivo"]
+		F [label="POST /admin/imagenes con\nmultipart/form-data y CSRF" color="#518BC4" fillcolor="#FFFFFF" tooltip="POST /admin/imagenes con multipart/form-data y CSRF"]
+		S [label="Nueva petición GET: mostrar la\nfotografía en la tabla" color="#518BC4" fillcolor="#FFFFFF" tooltip="Nueva petición GET: mostrar la fotografía en la tabla"]
+	}
+	subgraph cluster_framework {
+		color="#8797B1" fillcolor="#F1F4F8" fontcolor="#63748C" fontname="DejaVu Sans" fontsize=16 label="LARAVEL · RUTAS Y MIDDLEWARE" margin=16 penwidth=2 style="rounded,filled"
+		B [label="Laravel: ruta y middleware web" color="#8797B1" fillcolor="#FFFFFF" tooltip="Laravel: ruta y middleware web"]
+		G [label="Laravel comprueba el token CSRF" color="#8797B1" fillcolor="#FFFFFF" tooltip="Laravel comprueba el token CSRF"]
+		H [label="¿Token válido?" color="#8797B1" fillcolor="#FFFFFF" margin="0.2,0.1" shape=diamond style=filled tooltip="¿Token válido?"]
+		I [label="Rechazar petición: 419" color="#8797B1" fillcolor="#FFFFFF" tooltip="Rechazar petición: 419"]
+		M [label="Volver con errores y datos\nanteriores; seleccionar de nuevo\nel archivo" color="#8797B1" fillcolor="#FFFFFF" tooltip="Volver con errores y datos anteriores; seleccionar de nuevo el archivo"]
+	}
+	subgraph cluster_controlador {
+		color="#54A17A" fillcolor="#E8F6EE" fontcolor="#28754E" fontname="DejaVu Sans" fontsize=16 label="C · CONTROLADOR" margin=16 penwidth=2 style="rounded,filled"
+		C [label="ImagenController.create" color="#54A17A" fillcolor="#FFFFFF" tooltip="ImagenController.create"]
+		J [label="ImagenController.store llama a\nvalidar" color="#54A17A" fillcolor="#FFFFFF" tooltip="ImagenController.store llama a validar"]
+		K [label="Nombre y autor obligatorios,\nmáximo 120 caracteres; JPG, PNG o\nWebP hasta 2 MB" color="#54A17A" fillcolor="#FFFFFF" tooltip="Nombre y autor obligatorios, máximo 120 caracteres; JPG, PNG o WebP hasta 2 MB"]
+		L [label="¿Datos y archivo válidos?" color="#54A17A" fillcolor="#FFFFFF" margin="0.2,0.1" shape=diamond style=filled tooltip="¿Datos y archivo válidos?"]
+		P [label="¿Se guardó el registro?" color="#54A17A" fillcolor="#FFFFFF" margin="0.2,0.1" shape=diamond style=filled tooltip="¿Se guardó el registro?"]
+		Q [label="Eliminar el archivo nuevo y\npropagar la excepción" color="#54A17A" fillcolor="#FFFFFF" tooltip="Eliminar el archivo nuevo y propagar la excepción"]
+		R [label="Redirigir a /admin/imagenes" color="#54A17A" fillcolor="#FFFFFF" tooltip="Redirigir a /admin/imagenes"]
+	}
+	subgraph cluster_modelo {
+		color="#D4A053" fillcolor="#FFF0D9" fontcolor="#98601B" fontname="DejaVu Sans" fontsize=16 label="M · MODELO" margin=16 penwidth=2 style="rounded,filled"
+		O [label="Imagen.create: guardar nombre,\nautor y ruta en MySQL" color="#D4A053" fillcolor="#FFFFFF" tooltip="Imagen.create: guardar nombre, autor y ruta en MySQL"]
+	}
+	subgraph cluster_vista {
+		color="#A579D0" fillcolor="#F4EAFF" fontcolor="#7648A4" fontname="DejaVu Sans" fontsize=16 label="V · VISTA" margin=16 penwidth=2 style="rounded,filled"
+		D [label="Blade: create y parcial _form" color="#A579D0" fillcolor="#FFFFFF" tooltip="Blade: create y parcial _form"]
+	}
+	subgraph cluster_infra {
+		color="#8E99AA" fillcolor="#F1F2F4" fontcolor="#677385" fontname="DejaVu Sans" fontsize=16 label="DATOS Y ARCHIVOS · SERVICIOS" margin=16 penwidth=2 style="rounded,filled"
+		N [label="guardarImagen: Storage guarda el\narchivo en disco public, carpeta\nescaparate" color="#8E99AA" fillcolor="#FFFFFF" tooltip="guardarImagen: Storage guarda el archivo en disco public, carpeta escaparate"]
+	}
+	A -> B
+	B -> C
+	C -> D
+	D -> E
+	E -> F
+	F -> G
+	G -> H
+	H -> I [label=No color="#BD6576" fontcolor="#A45163"]
+	H -> J [label="Sí" color="#3C9B76" fontcolor="#2A775C"]
+	J -> K
+	K -> L
+	L -> M [label=No color="#BD6576" fontcolor="#A45163"]
+	M -> D
+	L -> N [label="Sí" color="#3C9B76" fontcolor="#2A775C"]
+	N -> O
+	O -> P
+	P -> Q [label=No color="#BD6576" fontcolor="#A45163"]
+	P -> R [label="Sí" color="#3C9B76" fontcolor="#2A775C"]
+	R -> S
+}

@@ -1,0 +1,70 @@
+// Escaparate 03_Editar_y_sustituir_fotografia MVC
+digraph "03_Editar_y_sustituir_fotografia" {
+	bgcolor=white compound=true newrank=true nodesep=0.5 outputorder=edgesfirst pad=0.55 rankdir=TB ranksep=0.55 splines=spline
+	node [fontcolor="#273449" fontname="DejaVu Sans" fontsize=11.1 margin="0.18,0.14" penwidth=1.25 shape=box style="rounded,filled"]
+	edge [arrowsize=0.73 color="#6B7E97" fontcolor="#53677F" fontname="DejaVu Sans" fontsize=10.8 penwidth=1.5]
+	subgraph cluster_cliente {
+		color="#518BC4" fillcolor="#E8F3FF" fontcolor="#295F95" fontname="DejaVu Sans" fontsize=16 label="NAVEGADOR / USUARIO" margin=16 penwidth=2 style="rounded,filled"
+		A [label="GET /admin/imagenes/id/edit" color="#518BC4" fillcolor="#FFFFFF" tooltip="GET /admin/imagenes/id/edit"]
+		G [label="POST multipart con _method=PUT y\ntoken CSRF" color="#518BC4" fillcolor="#FFFFFF" tooltip="POST multipart con _method=PUT y token CSRF"]
+		V [label="GET /admin/imagenes: mostrar\ncambios" color="#518BC4" fillcolor="#FFFFFF" tooltip="GET /admin/imagenes: mostrar cambios"]
+	}
+	subgraph cluster_framework {
+		color="#8797B1" fillcolor="#F1F4F8" fontcolor="#63748C" fontname="DejaVu Sans" fontsize=16 label="LARAVEL · RUTAS Y MIDDLEWARE" margin=16 penwidth=2 style="rounded,filled"
+		B [label="Laravel: ruta, middleware y Route\nModel Binding" color="#8797B1" fillcolor="#FFFFFF" tooltip="Laravel: ruta, middleware y Route Model Binding"]
+		C [label="¿Existe la imagen?" color="#8797B1" fillcolor="#FFFFFF" margin="0.2,0.1" shape=diamond style=filled tooltip="¿Existe la imagen?"]
+		D [label="Respuesta 404" color="#8797B1" fillcolor="#FFFFFF" tooltip="Respuesta 404"]
+		H [label="Laravel interpreta PUT y verifica\nCSRF" color="#8797B1" fillcolor="#FFFFFF" tooltip="Laravel interpreta PUT y verifica CSRF"]
+		K [label="Volver con errores; mantener\nregistro y foto anteriores" color="#8797B1" fillcolor="#FFFFFF" tooltip="Volver con errores; mantener registro y foto anteriores"]
+	}
+	subgraph cluster_controlador {
+		color="#54A17A" fillcolor="#E8F6EE" fontcolor="#28754E" fontname="DejaVu Sans" fontsize=16 label="C · CONTROLADOR" margin=16 penwidth=2 style="rounded,filled"
+		E [label="ImagenController.edit" color="#54A17A" fillcolor="#FFFFFF" tooltip="ImagenController.edit"]
+		I [label="ImagenController.update: validar\ndatos; archivo opcional" color="#54A17A" fillcolor="#FFFFFF" tooltip="ImagenController.update: validar datos; archivo opcional"]
+		J [label="¿Datos válidos?" color="#54A17A" fillcolor="#FFFFFF" margin="0.2,0.1" shape=diamond style=filled tooltip="¿Datos válidos?"]
+		L [label="¿Se adjuntó otra fotografía?" color="#54A17A" fillcolor="#FFFFFF" margin="0.2,0.1" shape=diamond style=filled tooltip="¿Se adjuntó otra fotografía?"]
+		M [label="Preparar solo los cambios de\nnombre y autor" color="#54A17A" fillcolor="#FFFFFF" tooltip="Preparar solo los cambios de nombre y autor"]
+		P [label="¿Actualización correcta?" color="#54A17A" fillcolor="#FFFFFF" margin="0.2,0.1" shape=diamond style=filled tooltip="¿Actualización correcta?"]
+		Q [label="Retirar el archivo nuevo si\nexiste y conservar el anterior;\npropagar excepción" color="#54A17A" fillcolor="#FFFFFF" tooltip="Retirar el archivo nuevo si existe y conservar el anterior; propagar excepción"]
+		R [label="¿Se guardó un archivo nuevo?" color="#54A17A" fillcolor="#FFFFFF" margin="0.2,0.1" shape=diamond style=filled tooltip="¿Se guardó un archivo nuevo?"]
+		T [label="Conservar el archivo actual" color="#54A17A" fillcolor="#FFFFFF" tooltip="Conservar el archivo actual"]
+		U [label="Redirigir al listado" color="#54A17A" fillcolor="#FFFFFF" tooltip="Redirigir al listado"]
+	}
+	subgraph cluster_modelo {
+		color="#D4A053" fillcolor="#FFF0D9" fontcolor="#98601B" fontname="DejaVu Sans" fontsize=16 label="M · MODELO" margin=16 penwidth=2 style="rounded,filled"
+		O [label="Imagen.update: actualizar\nregistro en MySQL" color="#D4A053" fillcolor="#FFFFFF" tooltip="Imagen.update: actualizar registro en MySQL"]
+	}
+	subgraph cluster_vista {
+		color="#A579D0" fillcolor="#F4EAFF" fontcolor="#7648A4" fontname="DejaVu Sans" fontsize=16 label="V · VISTA" margin=16 penwidth=2 style="rounded,filled"
+		F [label="Blade: edit y _form con nombre,\nautor y foto actual" color="#A579D0" fillcolor="#FFFFFF" tooltip="Blade: edit y _form con nombre, autor y foto actual"]
+	}
+	subgraph cluster_infra {
+		color="#8E99AA" fillcolor="#F1F2F4" fontcolor="#677385" fontname="DejaVu Sans" fontsize=16 label="DATOS Y ARCHIVOS · SERVICIOS" margin=16 penwidth=2 style="rounded,filled"
+		N [label="Guardar el archivo nuevo y\npreparar su ruta" color="#8E99AA" fillcolor="#FFFFFF" tooltip="Guardar el archivo nuevo y preparar su ruta"]
+		S [label="Storage: eliminar la fotografía\nanterior" color="#8E99AA" fillcolor="#FFFFFF" tooltip="Storage: eliminar la fotografía anterior"]
+	}
+	A -> B
+	B -> C
+	C -> D [label=No color="#BD6576" fontcolor="#A45163"]
+	C -> E [label="Sí" color="#3C9B76" fontcolor="#2A775C"]
+	E -> F
+	F -> G
+	G -> H
+	H -> I
+	I -> J
+	J -> K [label=No color="#BD6576" fontcolor="#A45163"]
+	K -> F
+	J -> L [label="Sí" color="#3C9B76" fontcolor="#2A775C"]
+	L -> M [label=No color="#BD6576" fontcolor="#A45163"]
+	L -> N [label="Sí" color="#3C9B76" fontcolor="#2A775C"]
+	M -> O
+	N -> O
+	O -> P
+	P -> Q [label=No color="#BD6576" fontcolor="#A45163"]
+	P -> R [label="Sí" color="#3C9B76" fontcolor="#2A775C"]
+	R -> S [label="Sí" color="#3C9B76" fontcolor="#2A775C"]
+	R -> T [label=No color="#BD6576" fontcolor="#A45163"]
+	S -> U
+	T -> U
+	U -> V
+}

@@ -1,0 +1,72 @@
+flowchart TD
+    %% Procesos originales organizados por capas.
+    %% Navegador, Laravel y servicios externos no son capas MVC.
+    subgraph L_CLIENTE["NAVEGADOR / USUARIO"]
+        direction TB
+        A["GET /admin/imagenes/nueva"]
+        E["Navegador: nombre, autor y archivo"]
+        F["POST /admin/imagenes con multipart/form-data y CSRF"]
+        S["Nueva petición GET: mostrar la fotografía en la tabla"]
+    end
+    subgraph L_FRAMEWORK["LARAVEL · RUTAS Y MIDDLEWARE"]
+        direction TB
+        B["Laravel: ruta y middleware web"]
+        G["Laravel comprueba el token CSRF"]
+        H{"¿Token válido?"}
+        I["Rechazar petición: 419"]
+        M["Volver con errores y datos anteriores; seleccionar de nuevo el archivo"]
+    end
+    subgraph L_CONTROLADOR["C · CONTROLADOR"]
+        direction TB
+        C["ImagenController.create"]
+        J["ImagenController.store llama a validar"]
+        K["Nombre y autor obligatorios, máximo 120 caracteres; JPG, PNG o WebP hasta 2 MB"]
+        L{"¿Datos y archivo válidos?"}
+        P{"¿Se guardó el registro?"}
+        Q["Eliminar el archivo nuevo y propagar la excepción"]
+        R["Redirigir a /admin/imagenes"]
+    end
+    subgraph L_MODELO["M · MODELO"]
+        direction TB
+        O["Imagen.create: guardar nombre, autor y ruta en MySQL"]
+    end
+    subgraph L_VISTA["V · VISTA"]
+        direction TB
+        D["Blade: create y parcial _form"]
+    end
+    subgraph L_INFRA["DATOS Y ARCHIVOS · SERVICIOS"]
+        direction TB
+        N["guardarImagen: Storage guarda el archivo en disco public, carpeta escaparate"]
+    end
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+    F --> G
+    G --> H
+    H -->|No| I
+    H -->|Sí| J
+    J --> K
+    K --> L
+    L -->|No| M
+    M --> D
+    L -->|Sí| N
+    N --> O
+    O --> P
+    P -->|No| Q
+    P -->|Sí| R
+    R --> S
+    %% Colores por capa arquitectónica
+    classDef clase_CLIENTE fill:#E8F3FF,stroke:#518BC4,color:#213247,stroke-width:1.5px;
+    class A,E,F,S clase_CLIENTE;
+    classDef clase_FRAMEWORK fill:#F1F4F8,stroke:#8797B1,color:#213247,stroke-width:1.5px;
+    class B,G,H,I,M clase_FRAMEWORK;
+    classDef clase_CONTROLADOR fill:#E8F6EE,stroke:#54A17A,color:#213247,stroke-width:1.5px;
+    class C,J,K,L,P,Q,R clase_CONTROLADOR;
+    classDef clase_MODELO fill:#FFF0D9,stroke:#D4A053,color:#213247,stroke-width:1.5px;
+    class O clase_MODELO;
+    classDef clase_VISTA fill:#F4EAFF,stroke:#A579D0,color:#213247,stroke-width:1.5px;
+    class D clase_VISTA;
+    classDef clase_INFRA fill:#F1F2F4,stroke:#8E99AA,color:#213247,stroke-width:1.5px;
+    class N clase_INFRA;

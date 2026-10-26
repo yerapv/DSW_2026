@@ -1,0 +1,47 @@
+// Productos 04_Eliminar_producto MVC
+digraph "04_Eliminar_producto" {
+	bgcolor=white compound=true newrank=true nodesep=0.5 outputorder=edgesfirst pad=0.55 rankdir=TB ranksep=0.55 splines=spline
+	node [fontcolor="#273449" fontname="DejaVu Sans" fontsize=11.1 margin="0.18,0.14" penwidth=1.25 shape=box style="rounded,filled"]
+	edge [arrowsize=0.73 color="#6B7E97" fontcolor="#53677F" fontname="DejaVu Sans" fontsize=10.8 penwidth=1.5]
+	subgraph cluster_cliente {
+		color="#518BC4" fillcolor="#E8F3FF" fontcolor="#295F95" fontname="DejaVu Sans" fontsize=16 label="NAVEGADOR / USUARIO" margin=16 penwidth=2 style="rounded,filled"
+		A [label="Pulsar Eliminar en la fila del\nproducto" color="#518BC4" fillcolor="#FFFFFF" tooltip="Pulsar Eliminar en la fila del producto"]
+		B [label="POST con _method=DELETE y token\nCSRF" color="#518BC4" fillcolor="#FFFFFF" tooltip="POST con _method=DELETE y token CSRF"]
+		M [label="GET del listado: mostrar las\nfilas restantes" color="#518BC4" fillcolor="#FFFFFF" tooltip="GET del listado: mostrar las filas restantes"]
+	}
+	subgraph cluster_framework {
+		color="#8797B1" fillcolor="#F1F4F8" fontcolor="#63748C" fontname="DejaVu Sans" fontsize=16 label="LARAVEL · RUTAS Y MIDDLEWARE" margin=16 penwidth=2 style="rounded,filled"
+		C [label="Laravel: ruta DELETE y\ncomprobación CSRF" color="#8797B1" fillcolor="#FFFFFF" tooltip="Laravel: ruta DELETE y comprobación CSRF"]
+		D [label="Route Model Binding: localizar\nProducto" color="#8797B1" fillcolor="#FFFFFF" tooltip="Route Model Binding: localizar Producto"]
+		E [label="¿Existe?" color="#8797B1" fillcolor="#FFFFFF" margin="0.2,0.1" shape=diamond style=filled tooltip="¿Existe?"]
+		F [label="Respuesta 404" color="#8797B1" fillcolor="#FFFFFF" tooltip="Respuesta 404"]
+	}
+	subgraph cluster_controlador {
+		color="#54A17A" fillcolor="#E8F6EE" fontcolor="#28754E" fontname="DejaVu Sans" fontsize=16 label="C · CONTROLADOR" margin=16 penwidth=2 style="rounded,filled"
+		G [label="ProductoController.destroy" color="#54A17A" fillcolor="#FFFFFF" tooltip="ProductoController.destroy"]
+		L [label="Redirigir a /admin/productos" color="#54A17A" fillcolor="#FFFFFF" tooltip="Redirigir a /admin/productos"]
+	}
+	subgraph cluster_modelo {
+		color="#D4A053" fillcolor="#FFF0D9" fontcolor="#98601B" fontname="DejaVu Sans" fontsize=16 label="M · MODELO" margin=16 penwidth=2 style="rounded,filled"
+		H [label="Producto.delete: eliminar\nregistro en MySQL" color="#D4A053" fillcolor="#FFFFFF" tooltip="Producto.delete: eliminar registro en MySQL"]
+		I [label="Modelo Producto: evento deleted" color="#D4A053" fillcolor="#FFFFFF" tooltip="Modelo Producto: evento deleted"]
+		J [label="¿Tenía una fotografía?" color="#D4A053" fillcolor="#FFFFFF" margin="0.2,0.1" shape=diamond style=filled tooltip="¿Tenía una fotografía?"]
+	}
+	subgraph cluster_infra {
+		color="#8E99AA" fillcolor="#F1F2F4" fontcolor="#677385" fontname="DejaVu Sans" fontsize=16 label="DATOS Y ARCHIVOS · SERVICIOS" margin=16 penwidth=2 style="rounded,filled"
+		K [label="Storage: eliminar archivo del\ndisco public" color="#8E99AA" fillcolor="#FFFFFF" tooltip="Storage: eliminar archivo del disco public"]
+	}
+	A -> B
+	B -> C
+	C -> D
+	D -> E
+	E -> F [label=No color="#BD6576" fontcolor="#A45163"]
+	E -> G [label="Sí" color="#3C9B76" fontcolor="#2A775C"]
+	G -> H
+	H -> I
+	I -> J
+	J -> K [label="Sí" color="#3C9B76" fontcolor="#2A775C"]
+	J -> L [label=No color="#BD6576" fontcolor="#A45163"]
+	K -> L
+	L -> M
+}

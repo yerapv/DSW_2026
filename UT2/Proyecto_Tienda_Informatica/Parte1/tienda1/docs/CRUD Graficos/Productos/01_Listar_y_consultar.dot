@@ -1,0 +1,57 @@
+// Productos 01_Listar_y_consultar MVC
+digraph "01_Listar_y_consultar" {
+	bgcolor=white compound=true newrank=true nodesep=0.5 outputorder=edgesfirst pad=0.55 rankdir=TB ranksep=0.55 splines=spline
+	node [fontcolor="#273449" fontname="DejaVu Sans" fontsize=11.1 margin="0.18,0.14" penwidth=1.25 shape=box style="rounded,filled"]
+	edge [arrowsize=0.73 color="#6B7E97" fontcolor="#53677F" fontname="DejaVu Sans" fontsize=10.8 penwidth=1.5]
+	subgraph cluster_cliente {
+		color="#518BC4" fillcolor="#E8F3FF" fontcolor="#295F95" fontname="DejaVu Sans" fontsize=16 label="NAVEGADOR / USUARIO" margin=16 penwidth=2 style="rounded,filled"
+		A [label="Navegador: abrir gestión de\nproductos" color="#518BC4" fillcolor="#FFFFFF" tooltip="Navegador: abrir gestión de productos"]
+		B [label="GET /admin/productos" color="#518BC4" fillcolor="#FFFFFF" tooltip="GET /admin/productos"]
+		J [label="Navegador: mostrar el listado" color="#518BC4" fillcolor="#FFFFFF" tooltip="Navegador: mostrar el listado"]
+		K [label="Pulsar Ver: GET\n/admin/productos/id" color="#518BC4" fillcolor="#FFFFFF" tooltip="Pulsar Ver: GET /admin/productos/id"]
+		Q [label="Navegador: mostrar ficha y botón\nVolver al listado" color="#518BC4" fillcolor="#FFFFFF" tooltip="Navegador: mostrar ficha y botón Volver al listado"]
+	}
+	subgraph cluster_framework {
+		color="#8797B1" fillcolor="#F1F4F8" fontcolor="#63748C" fontname="DejaVu Sans" fontsize=16 label="LARAVEL · RUTAS Y MIDDLEWARE" margin=16 penwidth=2 style="rounded,filled"
+		C [label="Laravel: entrada, rutas y\nmiddleware web" color="#8797B1" fillcolor="#FFFFFF" tooltip="Laravel: entrada, rutas y middleware web"]
+		L [label="Route Model Binding: buscar\nProducto por id en MySQL" color="#8797B1" fillcolor="#FFFFFF" tooltip="Route Model Binding: buscar Producto por id en MySQL"]
+		M [label="¿Existe el producto?" color="#8797B1" fillcolor="#FFFFFF" margin="0.2,0.1" shape=diamond style=filled tooltip="¿Existe el producto?"]
+		N [label="Laravel responde con 404" color="#8797B1" fillcolor="#FFFFFF" tooltip="Laravel responde con 404"]
+	}
+	subgraph cluster_controlador {
+		color="#54A17A" fillcolor="#E8F6EE" fontcolor="#28754E" fontname="DejaVu Sans" fontsize=16 label="C · CONTROLADOR" margin=16 penwidth=2 style="rounded,filled"
+		D [label="ProductoController.index" color="#54A17A" fillcolor="#FFFFFF" tooltip="ProductoController.index"]
+		O [label="ProductoController.show: cargar\ncategoría" color="#54A17A" fillcolor="#FFFFFF" tooltip="ProductoController.show: cargar categoría"]
+	}
+	subgraph cluster_modelo {
+		color="#D4A053" fillcolor="#FFF0D9" fontcolor="#98601B" fontname="DejaVu Sans" fontsize=16 label="M · MODELO" margin=16 penwidth=2 style="rounded,filled"
+		E [label="Eloquent: buscar por nombre,\nfiltrar por tipo y ordenar" color="#D4A053" fillcolor="#FFFFFF" tooltip="Eloquent: buscar por nombre, filtrar por tipo y ordenar"]
+		G [label="Cargar la categoría de cada\nproducto y paginar de cinco en\ncinco" color="#D4A053" fillcolor="#FFFFFF" tooltip="Cargar la categoría de cada producto y paginar de cinco en cinco"]
+	}
+	subgraph cluster_vista {
+		color="#A579D0" fillcolor="#F4EAFF" fontcolor="#7648A4" fontname="DejaVu Sans" fontsize=16 label="V · VISTA" margin=16 penwidth=2 style="rounded,filled"
+		H [label="Blade:\nadmin/productos/index.blade.php" color="#A579D0" fillcolor="#FFFFFF" tooltip="Blade: admin/productos/index.blade.php"]
+		I [label="Layouts admin y app: HTML con\ntabla, acciones y Volver" color="#A579D0" fillcolor="#FFFFFF" tooltip="Layouts admin y app: HTML con tabla, acciones y Volver"]
+		P [label="Blade:\nadmin/productos/show.blade.php" color="#A579D0" fillcolor="#FFFFFF" tooltip="Blade: admin/productos/show.blade.php"]
+	}
+	subgraph cluster_infra {
+		color="#8E99AA" fillcolor="#F1F2F4" fontcolor="#677385" fontname="DejaVu Sans" fontsize=16 label="DATOS Y ARCHIVOS · SERVICIOS" margin=16 penwidth=2 style="rounded,filled"
+		F [label="MySQL: productos y categorías" color="#8E99AA" fillcolor="#FFFFFF" shape=cylinder style=filled tooltip="MySQL: productos y categorías"]
+	}
+	A -> B
+	B -> C
+	C -> D
+	D -> E
+	E -> F
+	F -> G
+	G -> H
+	H -> I
+	I -> J
+	J -> K
+	K -> L
+	L -> M
+	M -> N [label=No color="#BD6576" fontcolor="#A45163"]
+	M -> O [label="Sí" color="#3C9B76" fontcolor="#2A775C"]
+	O -> P
+	P -> Q
+}

@@ -1,0 +1,52 @@
+flowchart TD
+    %% Procesos originales organizados por capas.
+    %% Navegador, Laravel y servicios externos no son capas MVC.
+    subgraph L_CLIENTE["NAVEGADOR / USUARIO"]
+        direction TB
+        A["Pulsar Eliminar en la fila de la fotografía"]
+        B["POST con _method=DELETE y token CSRF"]
+        L["Nueva petición GET: tabla sin la fotografía eliminada"]
+    end
+    subgraph L_FRAMEWORK["LARAVEL · RUTAS Y MIDDLEWARE"]
+        direction TB
+        C["Laravel: ruta DELETE y comprobación CSRF"]
+        D["Route Model Binding: localizar Imagen"]
+        E{"¿Existe el registro?"}
+        F["Respuesta 404"]
+    end
+    subgraph L_CONTROLADOR["C · CONTROLADOR"]
+        direction TB
+        G["ImagenController.destroy"]
+        K["Redirigir a /admin/imagenes"]
+    end
+    subgraph L_MODELO["M · MODELO"]
+        direction TB
+        H["Imagen.delete: borrar registro de MySQL"]
+        I["Modelo Imagen: evento deleted"]
+    end
+    subgraph L_INFRA["DATOS Y ARCHIVOS · SERVICIOS"]
+        direction TB
+        J["Storage: eliminar el archivo del disco public"]
+    end
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E -->|No| F
+    E -->|Sí| G
+    G --> H
+    H --> I
+    I --> J
+    J --> K
+    K --> L
+    %% Colores por capa arquitectónica
+    classDef clase_CLIENTE fill:#E8F3FF,stroke:#518BC4,color:#213247,stroke-width:1.5px;
+    class A,B,L clase_CLIENTE;
+    classDef clase_FRAMEWORK fill:#F1F4F8,stroke:#8797B1,color:#213247,stroke-width:1.5px;
+    class C,D,E,F clase_FRAMEWORK;
+    classDef clase_CONTROLADOR fill:#E8F6EE,stroke:#54A17A,color:#213247,stroke-width:1.5px;
+    class G,K clase_CONTROLADOR;
+    classDef clase_MODELO fill:#FFF0D9,stroke:#D4A053,color:#213247,stroke-width:1.5px;
+    class H,I clase_MODELO;
+    classDef clase_INFRA fill:#F1F2F4,stroke:#8E99AA,color:#213247,stroke-width:1.5px;
+    class J clase_INFRA;

@@ -1,0 +1,65 @@
+flowchart TD
+    %% Procesos originales organizados por capas.
+    %% Navegador, Laravel y servicios externos no son capas MVC.
+    subgraph L_CLIENTE["NAVEGADOR / USUARIO"]
+        direction TB
+        A["Navegador: GET /admin/avisos"]
+        I["Navegador: mostrar tabla"]
+        J["Pulsar Ver: GET /admin/avisos/id"]
+        P["Navegador: mostrar contenido del aviso"]
+    end
+    subgraph L_FRAMEWORK["LARAVEL · RUTAS Y MIDDLEWARE"]
+        direction TB
+        B["Laravel: entrada, rutas y middleware web"]
+        K["Route Model Binding: buscar Aviso por id"]
+        L{"¿Existe el aviso?"}
+        M["Laravel responde con 404"]
+    end
+    subgraph L_CONTROLADOR["C · CONTROLADOR"]
+        direction TB
+        C["AvisoController.index"]
+        N["AvisoController.show"]
+    end
+    subgraph L_MODELO["M · MODELO"]
+        direction TB
+        D["Eloquent: Aviso.latest.get"]
+        F["Colección de avisos ordenados por fecha descendente"]
+    end
+    subgraph L_VISTA["V · VISTA"]
+        direction TB
+        G["Blade: admin/avisos/index.blade.php"]
+        H["Layouts admin y app: HTML con tabla, acciones y Volver"]
+        O["Blade: admin/avisos/show.blade.php"]
+    end
+    subgraph L_INFRA["DATOS Y ARCHIVOS · SERVICIOS"]
+        direction TB
+        E[("MySQL: tabla avisos")]
+    end
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+    F --> G
+    G --> H
+    H --> I
+    I --> J
+    J --> K
+    K --> L
+    L -->|No| M
+    L -->|Sí| N
+    N --> O
+    O --> P
+    %% Colores por capa arquitectónica
+    classDef clase_CLIENTE fill:#E8F3FF,stroke:#518BC4,color:#213247,stroke-width:1.5px;
+    class A,I,J,P clase_CLIENTE;
+    classDef clase_FRAMEWORK fill:#F1F4F8,stroke:#8797B1,color:#213247,stroke-width:1.5px;
+    class B,K,L,M clase_FRAMEWORK;
+    classDef clase_CONTROLADOR fill:#E8F6EE,stroke:#54A17A,color:#213247,stroke-width:1.5px;
+    class C,N clase_CONTROLADOR;
+    classDef clase_MODELO fill:#FFF0D9,stroke:#D4A053,color:#213247,stroke-width:1.5px;
+    class D,F clase_MODELO;
+    classDef clase_VISTA fill:#F4EAFF,stroke:#A579D0,color:#213247,stroke-width:1.5px;
+    class G,H,O clase_VISTA;
+    classDef clase_INFRA fill:#F1F2F4,stroke:#8E99AA,color:#213247,stroke-width:1.5px;
+    class E clase_INFRA;

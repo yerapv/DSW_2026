@@ -214,3 +214,12 @@ flowchart TD
 El modelo sigue llamándose `Imagen` y declara explícitamente la tabla `escaparate_imagenes`. La galería pública solo consulta sus registros.
 
 Las fotos son archivos del disco `public`; MySQL guarda sus rutas. Si el archivo de ejemplo no existe, la vista de productos muestra un marcador.
+
+## Archivos para seguir el recorrido
+
+- **Entrada HTTP:** [Rutas web](../../routes/web.php).
+- **Controlador:** [ImagenController](../../app/Http/Controllers/ImagenController.php).
+- **Modelos:** [Imagen](../../app/Models/Imagen.php).
+- **Vistas Blade:** [index](../../resources/views/admin/imagenes/index.blade.php) · [show](../../resources/views/admin/imagenes/show.blade.php) · [create](../../resources/views/admin/imagenes/create.blade.php) · [edit](../../resources/views/admin/imagenes/edit.blade.php) · [_form](../../resources/views/admin/imagenes/_form.blade.php).
+- **Validación y soporte:** [Configuración del almacenamiento](../../config/filesystems.php).
+- **Layouts:** [Layout general](../../resources/views/layouts/app.blade.php) · [Layout administrativo](../../resources/views/layouts/admin.blade.php).

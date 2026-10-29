@@ -106,3 +106,11 @@ flowchart TD
 `lineas_carrito.precio_centimos` es el **importe completo de la línea**, no su precio unitario. Si se añaden 2 unidades a 10 € y después 3 a 12 €, queda una línea de 5 unidades y 56 €. Consultar el carrito no recalcula el importe con el catálogo. Con un precio sin cambios de 10 €, 2 + 3 unidades suman 50 €.
 
 La migración agrupa los duplicados anteriores sumando cantidades e importes y establece una restricción única. La transacción de alta usa el mismo bloqueo del carrito que el pago; si falla una escritura, no se confirma la suma. [Generar presupuesto](presupuestos.md) · [Comprar](compra.md).
+
+## Archivos para seguir el recorrido
+
+- **Entrada HTTP:** [Rutas web](../../routes/web.php).
+- **Controladores:** [CarritoController](../../app/Http/Controllers/CarritoController.php).
+- **Modelos:** [Carrito](../../app/Models/Carrito.php) · [LineaCarrito](../../app/Models/LineaCarrito.php) · [Cliente](../../app/Models/Cliente.php) · [Producto](../../app/Models/Producto.php) · [Presupuesto](../../app/Models/Presupuesto.php).
+- **Vistas Blade:** [usuario/carrito/index](../../resources/views/usuario/carrito/index.blade.php).
+- **Layout público:** [Layout de Usuario](../../resources/views/layouts/usuario.blade.php) · [Layout general](../../resources/views/layouts/app.blade.php).

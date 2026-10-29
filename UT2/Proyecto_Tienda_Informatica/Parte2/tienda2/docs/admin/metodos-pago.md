@@ -197,3 +197,11 @@ flowchart TD
 ```
 
 Un método inactivo no puede elegirse al pagar. La validación de edición ignora el propio registro al comprobar el código único. Al borrarlo, pedidos.metodo_pago_id pasa a NULL; el código y el nombre copiados en el pedido se conservan.
+
+## Archivos para seguir el recorrido
+
+- **Entrada HTTP:** [Rutas web](../../routes/web.php).
+- **Controlador:** [MetodoPagoController](../../app/Http/Controllers/MetodoPagoController.php).
+- **Modelos:** [MetodoPago](../../app/Models/MetodoPago.php) · [Pedido](../../app/Models/Pedido.php).
+- **Vistas Blade:** [index](../../resources/views/admin/metodos/index.blade.php) · [show](../../resources/views/admin/metodos/show.blade.php) · [create](../../resources/views/admin/metodos/create.blade.php) · [edit](../../resources/views/admin/metodos/edit.blade.php) · [_form](../../resources/views/admin/metodos/_form.blade.php).
+- **Layouts:** [Layout general](../../resources/views/layouts/app.blade.php) · [Layout administrativo](../../resources/views/layouts/admin.blade.php).

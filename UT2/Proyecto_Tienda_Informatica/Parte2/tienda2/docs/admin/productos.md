@@ -222,3 +222,12 @@ flowchart TD
 El tipo se guarda con el enum entero `TipoProducto`: 1 portátil, 2 periférico y 3 componente. Los presupuestos conservan sus datos históricos aunque se elimine el producto.
 
 Las fotos son archivos del disco `public`; MySQL guarda sus rutas. Si el archivo de ejemplo no existe, la vista de productos muestra un marcador.
+
+## Archivos para seguir el recorrido
+
+- **Entrada HTTP:** [Rutas web](../../routes/web.php).
+- **Controlador:** [ProductoController](../../app/Http/Controllers/ProductoController.php).
+- **Modelos:** [Producto](../../app/Models/Producto.php) · [Categoria](../../app/Models/Categoria.php) · [LineaCarrito](../../app/Models/LineaCarrito.php).
+- **Vistas Blade:** [index](../../resources/views/admin/productos/index.blade.php) · [show](../../resources/views/admin/productos/show.blade.php) · [create](../../resources/views/admin/productos/create.blade.php) · [edit](../../resources/views/admin/productos/edit.blade.php) · [_form](../../resources/views/admin/productos/_form.blade.php).
+- **Validación y soporte:** [Validación de productos](../../app/Http/Requests/GuardarProductoRequest.php) · [Enum de tipos de producto](../../app/Enums/TipoProducto.php) · [Configuración de fotografías](../../config/filesystems.php).
+- **Layouts:** [Layout general](../../resources/views/layouts/app.blade.php) · [Layout administrativo](../../resources/views/layouts/admin.blade.php).

@@ -91,3 +91,11 @@ El cliente de la compra viaja en `cliente_id`, no en una sesión de selección. 
 | Cálculos de servicios | Sin formularios propios. | Envío, montaje y financiación sin persistencia. |
 
 Los módulos retirados no forman parte de los diagramas. [Modelo de datos compartido](MODELO_DATOS.md).
+
+## Archivos para seguir el recorrido
+
+- **Punto de entrada y rutas:** [Entrada pública](../public/index.php) · [Rutas web](../routes/web.php).
+- **Controladores de ejemplo:** [ProductoController](../app/Http/Controllers/ProductoController.php) · [TiendaController](../app/Http/Controllers/TiendaController.php) · [CarritoController](../app/Http/Controllers/CarritoController.php).
+- **Modelos Eloquent de ejemplo:** [Producto](../app/Models/Producto.php) · [Cliente](../app/Models/Cliente.php) · [Carrito](../app/Models/Carrito.php) · [Pedido](../app/Models/Pedido.php).
+- **Layouts Blade:** [Layout general](../resources/views/layouts/app.blade.php) · [Layout administrativo](../resources/views/layouts/admin.blade.php) · [Layout público](../resources/views/layouts/usuario.blade.php).
+- **Infraestructura:** [Discos de archivos](../config/filesystems.php) · [Migraciones de datos](../database/migrations).

@@ -144,3 +144,11 @@ erDiagram
 - Los importes son enteros en céntimos. Los códigos de `EstadoPedido` y `TipoProducto` también son enteros. `clientes.tipo` es un texto y no es `TipoProducto`.
 
 Se omiten las tablas técnicas de Laravel (usuarios, sesiones, caché y colas), que no forman parte de estos módulos de negocio. Las imágenes son archivos: sus columnas guardan rutas, no binarios.
+
+## Archivos para seguir el recorrido
+
+- **Modelos de catálogo y contenido:** [Categoria](../app/Models/Categoria.php) · [Producto](../app/Models/Producto.php) · [Aviso](../app/Models/Aviso.php) · [Imagen](../app/Models/Imagen.php).
+- **Modelos de cliente y carrito:** [Cliente](../app/Models/Cliente.php) · [Carrito](../app/Models/Carrito.php) · [LineaCarrito](../app/Models/LineaCarrito.php).
+- **Modelos de documentos y pago:** [Presupuesto](../app/Models/Presupuesto.php) · [LineaPresupuesto](../app/Models/LineaPresupuesto.php) · [MetodoPago](../app/Models/MetodoPago.php) · [Pedido](../app/Models/Pedido.php).
+- **Tipos y estados:** [Tipos de producto](../app/Enums/TipoProducto.php) · [Estados de pedido](../app/Enums/EstadoPedido.php).
+- **Esquema de MySQL:** [Migraciones y claves foráneas](../database/migrations).

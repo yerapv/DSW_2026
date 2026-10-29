@@ -90,3 +90,12 @@ flowchart TD
 ```
 
 En novedades, `tipo` filtra un array definido en el controlador con textos como `periferico`. Es distinto del catálogo persistente, donde `TipoProducto` usa códigos enteros. El nodo de Modelo indica expresamente que no hay persistencia en este flujo.
+
+## Archivos para seguir el recorrido
+
+- **Entrada HTTP:** [Rutas web](../../routes/web.php).
+- **Controladores:** [BienvenidaController](../../app/Http/Controllers/BienvenidaController.php) · [NovedadController](../../app/Http/Controllers/NovedadController.php) · [CategoriaController](../../app/Http/Controllers/CategoriaController.php) · [TiendaController](../../app/Http/Controllers/TiendaController.php).
+- **Modelos:** [Categoria](../../app/Models/Categoria.php) · [Producto](../../app/Models/Producto.php) · [Aviso](../../app/Models/Aviso.php) · [Imagen](../../app/Models/Imagen.php).
+- **Vistas Blade:** [usuario/bienvenida](../../resources/views/usuario/bienvenida.blade.php) · [usuario/novedades](../../resources/views/usuario/novedades.blade.php) · [usuario/categorias/index](../../resources/views/usuario/categorias/index.blade.php) · [usuario/avisos/index](../../resources/views/usuario/avisos/index.blade.php) · [usuario/imagenes/index](../../resources/views/usuario/imagenes/index.blade.php).
+- **Servicios, reglas y configuración:** [Almacenamiento del escaparate](../../config/filesystems.php).
+- **Layout público:** [Layout de Usuario](../../resources/views/layouts/usuario.blade.php) · [Layout general](../../resources/views/layouts/app.blade.php).

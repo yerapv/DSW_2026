@@ -103,3 +103,12 @@ flowchart TD
 ```
 
 Los nombres e importes no cambian al editar el catálogo. Si se borra un producto, `lineas_presupuesto.producto_id` queda a NULL y se conserva `producto_nombre`. Si se borra el cliente, `presupuestos.cliente_id` queda a NULL y permanece `datos_cliente`.
+
+## Archivos para seguir el recorrido
+
+- **Entrada HTTP:** [Rutas web](../../routes/web.php).
+- **Controladores:** [CarritoController](../../app/Http/Controllers/CarritoController.php).
+- **Modelos:** [Carrito](../../app/Models/Carrito.php) · [LineaCarrito](../../app/Models/LineaCarrito.php) · [Presupuesto](../../app/Models/Presupuesto.php) · [LineaPresupuesto](../../app/Models/LineaPresupuesto.php) · [Cliente](../../app/Models/Cliente.php) · [Producto](../../app/Models/Producto.php).
+- **Vistas Blade:** [usuario/carrito/index](../../resources/views/usuario/carrito/index.blade.php) · [usuario/carrito/quote](../../resources/views/usuario/carrito/quote.blade.php).
+- **Servicios, reglas y configuración:** [Servicio de presupuestos (ubicación orientativa)](../../app/Services/ServicioPresupuestos.php).
+- **Layout público:** [Layout de Usuario](../../resources/views/layouts/usuario.blade.php) · [Layout general](../../resources/views/layouts/app.blade.php).

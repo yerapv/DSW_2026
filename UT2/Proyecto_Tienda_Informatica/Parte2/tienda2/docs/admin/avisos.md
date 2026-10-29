@@ -197,3 +197,11 @@ flowchart TD
 ```
 
 La consulta pública se realiza aparte con `TiendaController.avisos`; allí no hay controles de gestión.
+
+## Archivos para seguir el recorrido
+
+- **Entrada HTTP:** [Rutas web](../../routes/web.php).
+- **Controlador:** [AvisoController](../../app/Http/Controllers/AvisoController.php).
+- **Modelos:** [Aviso](../../app/Models/Aviso.php).
+- **Vistas Blade:** [index](../../resources/views/admin/avisos/index.blade.php) · [show](../../resources/views/admin/avisos/show.blade.php) · [create](../../resources/views/admin/avisos/create.blade.php) · [edit](../../resources/views/admin/avisos/edit.blade.php) · [_form](../../resources/views/admin/avisos/_form.blade.php).
+- **Layouts:** [Layout general](../../resources/views/layouts/app.blade.php) · [Layout administrativo](../../resources/views/layouts/admin.blade.php).

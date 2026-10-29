@@ -197,3 +197,11 @@ flowchart TD
 ```
 
 Al borrar un cliente, MySQL elimina su carrito y las líneas del carrito por cascada. Los pedidos y presupuestos permanecen: su cliente_id pasa a NULL y sus instantáneas conservan los datos guardados. Esta gestión de Admin es distinta de la ficha pública persistente.
+
+## Archivos para seguir el recorrido
+
+- **Entrada HTTP:** [Rutas web](../../routes/web.php).
+- **Controlador:** [ClienteController](../../app/Http/Controllers/ClienteController.php).
+- **Modelos:** [Cliente](../../app/Models/Cliente.php) · [Carrito](../../app/Models/Carrito.php) · [Pedido](../../app/Models/Pedido.php) · [Presupuesto](../../app/Models/Presupuesto.php).
+- **Vistas Blade:** [index](../../resources/views/admin/clientes/index.blade.php) · [show](../../resources/views/admin/clientes/show.blade.php) · [create](../../resources/views/admin/clientes/create.blade.php) · [edit](../../resources/views/admin/clientes/edit.blade.php) · [_form](../../resources/views/admin/clientes/_form.blade.php).
+- **Layouts:** [Layout general](../../resources/views/layouts/app.blade.php) · [Layout administrativo](../../resources/views/layouts/admin.blade.php).

@@ -54,3 +54,10 @@ flowchart TD
 ```
 
 La selección viaja en la URL y en los formularios, sin una sesión o cookie de selección. La página principal de Usuario no muestra Volver. Las páginas interiores sí lo mantienen. `layouts/app` aporta Usuario, Admin y Carrito; `layouts/usuario` aporta la navegación pública; `usuario/_menu-espacio` reúne los accesos del espacio.
+
+## Archivos para seguir el recorrido
+
+- **Entrada HTTP:** [Rutas web](../../routes/web.php).
+- **Controladores:** [UsuarioController](../../app/Http/Controllers/UsuarioController.php).
+- **Modelos:** [Cliente](../../app/Models/Cliente.php) · [Carrito](../../app/Models/Carrito.php) · [LineaCarrito](../../app/Models/LineaCarrito.php) · [Presupuesto](../../app/Models/Presupuesto.php) · [Pedido](../../app/Models/Pedido.php).
+- **Vistas Blade:** [usuario/index](../../resources/views/usuario/index.blade.php) · [usuario/_menu-espacio](../../resources/views/usuario/_menu-espacio.blade.php) · [layouts/usuario](../../resources/views/layouts/usuario.blade.php) · [layouts/app](../../resources/views/layouts/app.blade.php).

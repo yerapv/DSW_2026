@@ -111,7 +111,7 @@ class ImagenController extends Controller
 
     private function guardarImagen(Request $request): string
     {
-        $ruta = $request->file('imagen')->store('escaparate', 'public');
+        $ruta = $request->file('imagen')->store('escaparate', 'almacen_imagenes_escaparate');
         if ($ruta === false) {
             throw new RuntimeException('No se pudo guardar la fotografía del escaparate.');
         }

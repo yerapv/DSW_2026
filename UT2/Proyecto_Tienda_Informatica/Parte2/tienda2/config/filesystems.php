@@ -40,6 +40,23 @@ return [
 
         'public' => [
             'driver' => 'local',
+            'root' => storage_path('app/public'),
+            // Las imágenes se sirven desde el mismo dominio y puerto que la página.
+            'url' => '/storage',
+            'visibility' => 'public',
+            'throw' => false,
+            'report' => false,
+        ],
+
+        'almacen_imagenes_productos' => [
+            'driver' => 'local',
+            'root' => public_path('storage'),
+            'url' => env('APP_URL') . '/storage',
+            'visibility' => 'public',
+        ],
+
+        'almacen_imagenes_escaparate' => [
+            'driver' => 'local',
             'root' => public_path('storage'),
             'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',

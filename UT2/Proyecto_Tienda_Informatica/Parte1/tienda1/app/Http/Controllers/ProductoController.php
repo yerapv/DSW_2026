@@ -19,8 +19,8 @@ class ProductoController extends Controller
     public function index(Request $request): View
     {
         $productos = Producto::query()->with('categoria')
-            ->when($request->filled('q'), fn ($q) => $q->where('nombre', 'like', '%'.$request->query('q').'%'))
-            ->when($request->filled('tipo'), fn ($q) => $q->where('tipo', $request->query('tipo')))
+            ->when($request->filled('q'), fn($q) => $q->where('nombre', 'like', '%' . $request->query('q') . '%'))
+            ->when($request->filled('tipo'), fn($q) => $q->where('tipo', $request->query('tipo')))
             ->orderBy('nombre')->paginate(5)->withQueryString();
 
         return view('admin.productos.index', compact('productos'));
@@ -129,7 +129,7 @@ class ProductoController extends Controller
     /** Guarda la fotografía validada en la carpeta pública de productos. */
     private function guardarImagen(GuardarProductoRequest $request): string
     {
-        $ruta = $request->file('imagen')->store('productos', 'public');
+        $ruta = $request->file('imagen')->store('productos', 'almacen_imagenes');
         if ($ruta === false) {
             throw new RuntimeException('No se pudo guardar la fotografía del producto.');
         }

@@ -144,7 +144,7 @@ class ProductoController extends Controller
     /** Guarda la fotografía validada en la carpeta pública de productos. */
     private function guardarImagen(GuardarProductoRequest $request): string
     {
-        $ruta = $request->file('imagen')->store('productos', 'public');
+        $ruta = $request->file('imagen')->store('productos', 'almacen_imagenes_productos');
         if ($ruta === false) {
             throw new RuntimeException('No se pudo guardar la fotografía del producto.');
         }

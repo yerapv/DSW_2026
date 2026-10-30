@@ -30,8 +30,8 @@ class ProductoController extends Controller
             'tipo.enum' => 'Selecciona un tipo de producto válido.',
         ]);
         $productos = Producto::query()->with('categoria')
-            ->when($request->filled('q'), fn ($q) => $q->where('nombre', 'like', '%'.$request->query('q').'%'))
-            ->when($filtros['tipo'] ?? null, fn ($q, $tipo) => $q->where('tipo', $tipo))
+            ->when($request->filled('q'), fn($q) => $q->where('nombre', 'like', '%' . $request->query('q') . '%'))
+            ->when($filtros['tipo'] ?? null, fn($q, $tipo) => $q->where('tipo', $tipo))
             ->orderBy('nombre')->paginate(5)->withQueryString();
 
         return view('admin.productos.index', compact('productos'));

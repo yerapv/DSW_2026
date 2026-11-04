@@ -1,0 +1,60 @@
+<?php
+
+return [
+    'e01' => [
+        'id' => 'E01',
+        'titulo' => 'Contador por sesión',
+        'descripcion' => 'Cuenta visitas del cliente y permite reiniciar el contador almacenado en sesión.',
+        'origen' => 'E01_Contador_Sesion/codigo',
+        'url' => '/e01/contador',
+        'base_datos' => false,
+    ],
+    'e02' => [
+        'id' => 'E02',
+        'titulo' => 'Preferencia con cookie',
+        'descripcion' => 'Guarda el tema de lectura durante 30 días y permite olvidar la preferencia.',
+        'origen' => 'E02_Preferencia_Cookie/codigo',
+        'url' => '/e02/lectura',
+        'base_datos' => false,
+    ],
+    'e03' => [
+        'id' => 'E03',
+        'titulo' => 'Favoritos en sesión',
+        'descripcion' => 'Añade, quita y vacía recetas favoritas sin duplicar sus identificadores.',
+        'origen' => 'E03_Favoritos_Sesion/codigo',
+        'url' => '/e03/recetas',
+        'base_datos' => false,
+    ],
+    'e04' => [
+        'id' => 'E04',
+        'titulo' => 'Registro de socios',
+        'descripcion' => 'Valida los datos, crea una cuenta con contraseña con hash y abre una sesión autenticada.',
+        'origen' => 'E04_Registro_Socios/codigo',
+        'url' => '/e04/registro',
+        'base_datos' => true,
+    ],
+    'e05' => [
+        'id' => 'E05',
+        'titulo' => 'Login, logout y perfil',
+        'descripcion' => 'Inicia sesión, recuerda el acceso y cierra la sesión desde un perfil protegido.',
+        'origen' => 'E05_Login_Logout_Perfil/codigo',
+        'url' => '/e05/acceso',
+        'base_datos' => true,
+    ],
+    'e06' => [
+        'id' => 'E06',
+        'titulo' => 'Roles y middleware',
+        'descripcion' => 'Comprueba el rol con un Enum y protege la zona de gestión mediante middleware.',
+        'origen' => 'E06_Roles_Middleware/codigo',
+        'url' => '/e06/gestion',
+        'base_datos' => true,
+    ],
+    'e07' => [
+        'id' => 'E07',
+        'titulo' => 'Notas privadas con Policy',
+        'descripcion' => 'Crea, consulta, edita y elimina notas; solo su propietario puede acceder a ellas.',
+        'origen' => 'E07_Notas_Policy/codigo',
+        'url' => '/e07/notas',
+        'base_datos' => true,
+    ],
+];

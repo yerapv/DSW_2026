@@ -50,7 +50,7 @@ Route::get('registrar', function () {
 Route::post('registrar', [AuthController::class, 'registrar']);
 //Route::get('usuarios', [AuthController::class, 'usuarios']);
 
-Route::group(['prefix' => 'v1'], function () {
+Route::group(['prefix' => 'v1', 'middleware' => 'auth:sanctum'], function () {
     Route::apiResource('clientes', ClienteController::class);
     Route::apiResource('facturas', FacturaController::class);
 });

@@ -36,7 +36,7 @@ class UsuarioController extends Controller
         //$usuarioInsertado = Usuario::insert($request->all());
 
         // Retornar una respuesta JSON indicando que el usuario fue creado
-        return response()->json(['mensaje' => 'Usuario creado', 'usuario' => $usuario], 200);
+        return response()->json(['mensaje' => 'Usuario creado', 'usuario' => $usuario], 201);
     }
 
     /**
